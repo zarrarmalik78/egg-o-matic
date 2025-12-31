@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EGG-O-MATIC: PRO EDITION</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Fugaz+One&family=Inter:wght@900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --comic-black: #000000;
+        --halftone-color: rgba(0, 0, 0, 0.2);
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #1a1a1a;
+        background-image: radial-gradient(var(--halftone-color) 20%, transparent 20%);
+        background-size: 25px 25px;
+        background-attachment: fixed;
+        overflow-x: hidden;
+        transition: background-color 0.5s ease;
+      }
+
+      .game-font { font-family: 'Bangers', cursive; }
+      .marker-font { font-family: 'Permanent Marker', cursive; }
+      .impact-font { font-family: 'Fugaz One', cursive; }
+
+      .neobrutalist-card {
+        border: 4px solid var(--comic-black);
+        box-shadow: 8px 8px 0px 0px var(--comic-black);
+        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .neobrutalist-button {
+        border: 3px solid var(--comic-black);
+        box-shadow: 5px 5px 0px 0px var(--comic-black);
+        transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .neobrutalist-button:active {
+        transform: translate(3px, 3px);
+        box-shadow: 1px 1px 0px 0px var(--comic-black);
+      }
+
+      /* High-contrast text outline */
+      .timer-text {
+        -webkit-text-stroke: 2px var(--comic-black);
+        text-shadow: 4px 4px 0px var(--comic-black);
+      }
+
+      .header-text {
+        -webkit-text-stroke: 2px var(--comic-black);
+        text-shadow: 8px 8px 0px var(--comic-black);
+        filter: drop-shadow(2px 2px 0px white);
+      }
+
+      /* Character Animations */
+      @keyframes jitter {
+        0% { transform: translate(0,0) rotate(0deg); }
+        25% { transform: translate(-1px, 1px) rotate(-1deg); }
+        50% { transform: translate(1px, -1px) rotate(1deg); }
+        75% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+        100% { transform: translate(0,0) rotate(0deg); }
+      }
+      .animate-jitter { animation: jitter 0.1s infinite; }
+
+      @keyframes hover-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+      }
+      .animate-float { animation: hover-float 2s ease-in-out infinite; }
+
+      @keyframes pulse-scale {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+      .animate-pulse-slow { animation: pulse-scale 1.2s ease-in-out infinite; }
+
+      /* Timer Animations */
+      @keyframes digit-pop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.12) rotate(2deg); }
+        100% { transform: scale(1); }
+      }
+      .animate-digit-pop {
+        display: inline-block;
+        animation: digit-pop 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes minute-thud {
+        0% { transform: scale(1); }
+        30% { transform: scale(1.35) rotate(-5deg); filter: brightness(1.4); }
+        50% { transform: scale(0.9) rotate(2deg); }
+        75% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      .animate-minute-thud {
+        display: inline-block;
+        animation: minute-thud 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes flash-white {
+        0% { background-color: rgba(255,255,255,0.9); opacity: 1; }
+        100% { background-color: transparent; opacity: 0; }
+      }
+      .flash-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 50;
+      }
+      .do-flash { animation: flash-white 0.25s ease-out forwards; }
+
+      @keyframes pop-in {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-pop-in { animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+      /* Speech Bubble Styling */
+      .speech-bubble {
+        position: relative;
+        background: #fff;
+        border: 4px solid #000;
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 6px 6px 0px 0px #000;
+      }
+      .speech-bubble:after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 30px;
+        border-width: 20px 20px 0 0;
+        border-style: solid;
+        border-color: #000 transparent transparent transparent;
+      }
+      .speech-bubble:before {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 33px;
+        border-width: 15px 15px 0 0;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+        z-index: 1;
+      }
+
+      /* Chrome, Safari, Edge, Opera - Remove arrows for number input */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
