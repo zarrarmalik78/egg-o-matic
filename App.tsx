@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { EggType, TimerStatus } from './types';
-import { EGG_CONFIGS, EnhancedEggConfig } from './constants';
-import EggCharacter from './components/EggCharacter';
-import CrackOverlay from './components/CrackOverlay';
+import { EggType, TimerStatus } from './types.ts';
+import { EGG_CONFIGS, EnhancedEggConfig } from './constants.ts';
+import EggCharacter from './components/EggCharacter.tsx';
+import CrackOverlay from './components/CrackOverlay.tsx';
 import { Play, Pause, RotateCcw, Volume2, ShieldCheck, Zap, Ghost, Trophy, Settings2 } from 'lucide-react';
 
 const App: React.FC = () => {

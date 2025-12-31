@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { EggType } from '../types';
+import { EggType } from '../types.ts';
 
 interface EggCharacterProps {
   type: EggType;
